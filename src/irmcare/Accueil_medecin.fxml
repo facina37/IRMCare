@@ -36,7 +36,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Vérification exmens">
+    <Tab text="Vérification examens">
          <content>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
@@ -75,4 +75,3 @@
          </content></Tab>
   </tabs>
 </TabPane>
-
