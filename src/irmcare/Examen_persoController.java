@@ -74,6 +74,7 @@ public class Examen_persoController implements Initializable{
     private Button valideGrade;
     
     private int idExamen; //récupéré de la page précédente
+    private int idPatient;
     private Stage dialogStage;
     
     ConnexionOracle maconnection = new ConnexionOracle();
@@ -86,10 +87,32 @@ public class Examen_persoController implements Initializable{
         if(isErrorChoiceValid()){
             if (refaire.isSelected()){
                 //==> on doit supprimer les données de cet examen
+                String requeteSuppr = "delete from examen where idexamen = "+idExamen+";";
+                try{
+                    stmt = maconnection.ObtenirConnection().createStatement();
+                    stmt.executeQuery(requeteSuppr);
+                    System.out.println("L'examen a bien été supprimé");
+                }
+                catch(SQLException e)
+                {
+                    System.out.println("Erreur, l'examen n'a pas été supprimé");
+                }
                 //==> on doit en reprogrammer un dans deux jours
+                String requeteAgenda = "update agenda set PROCHAINEXAMEN = dateJour + 2 where idpatient = "+idPatient+";";
+                try{
+                    stmt = maconnection.ObtenirConnection().createStatement();
+                    stmt.executeQuery(requeteAgenda);
+                    System.out.println("Un nouvel examen a été programmé dans 2j");
+                }
+                catch(SQLException e)
+                {
+                    System.out.println("Un nouvel examen n'a pas pu etre programmé");
+                }
             }
             if (suppression.isSelected()){
                 //==>on supprime l'avant dernier examen effectué par ce patient
+                //petit pop up
+                JOptionPane.showMessageDialog(null, "Contactez la personne responsable de la gestion des bases de données pour cela");
             }
         }
     }
@@ -121,7 +144,16 @@ public class Examen_persoController implements Initializable{
     private void handleValideGrade(ActionEvent event) {
         if(isGradeChoiceValid())
         {
-            //on rentre le grade medecin dans la bdd
+            String requeteGrade = "update examen set gradeMedecin = "+grade.getValue()+" where idpatient = "+idPatient+";";
+            try{
+                stmt = maconnection.ObtenirConnection().createStatement();
+                stmt.executeQuery(requeteGrade);
+                System.out.println("La décision a bien été prise en compte");
+            }
+            catch(SQLException e)
+            {
+                System.out.println("Erreur, décision non prise en compte");
+            }
         }
     }
     
@@ -154,24 +186,22 @@ public class Examen_persoController implements Initializable{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
             while(result.next()){
-                //concaténer avec les résultats
-                gradeMachine.setText(gradeMachine.getText());
-                risqueTotal.setText(risqueTotal.getText());
-                risqueMeta.setText(risqueMeta.getText());
-                risquePerfu.setText(risquePerfu.getText());
-                volCrane.setText(volCrane.getText());
-                axeCrane.setText(axeCrane.getText());
-                volTumeur.setText(volTumeur.getText());
-                ttp.setText(ttp.getText());
-                rcbv.setText(rcbv.getText());
-                mtt.setText(mtt.getText());
-                rcbf.setText(rcbf.getText());
-                lac.setText(lac.getText());
-                naa_cho.setText(naa_cho.getText());
-                cho_cr.setText(cho_cr.getText());
-                lip_cr.setText(lip_cr.getText());
-                naa_cr.setText(naa_cr.getText());
-                valide = true;
+                gradeMachine.setText(gradeMachine.getText()+result.getString("GRADEMACHINE"));
+                risqueTotal.setText(risqueTotal.getText()+result.getString("RISQUE"));
+                volCrane.setText(volCrane.getText()+result.getString("VOLCRANE"));
+                axeCrane.setText(axeCrane.getText()+result.getString("VALMAXAXECRANE"));
+                volTumeur.setText(volTumeur.getText()+result.getString("VOLTUMEUR"));
+                ttp.setText(ttp.getText()+result.getString("TTP"));
+                rcbv.setText(rcbv.getText()+result.getString("RCBV"));
+                mtt.setText(mtt.getText()+result.getString("MTT"));
+                rcbf.setText(rcbf.getText()+result.getString("RCBF"));
+                lac.setText(lac.getText()+result.getString("LAC"));
+                naa_cho.setText(naa_cho.getText()+result.getString("NAA_CHO"));
+                cho_cr.setText(cho_cr.getText()+result.getString("CHO_CR"));
+                lip_cr.setText(lip_cr.getText()+result.getString("LIP_CR"));
+                naa_cr.setText(naa_cr.getText()+result.getString("NAA_CR"));
+                valide = result.getBoolean("VALIDE");
+                idPatient = result.getInt("IDPATIENT");
             }
         }
         catch(SQLException e){
