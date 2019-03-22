@@ -8,23 +8,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irmcare.ListePatientsTechnicienController">
   <tabs>
     <Tab text="Patients">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView layoutX="8.0" layoutY="55.0" prefHeight="316.0" prefWidth="584.0">
+                  <TableView fx:id="patientTable" layoutX="8.0" layoutY="55.0" prefHeight="316.0" prefWidth="584.0">
                     <columns>
-                      <TableColumn prefWidth="47.0" text="ID" />
-                      <TableColumn prefWidth="54.0" text="Grp" />
-                        <TableColumn prefWidth="50.0" text="Nom" />
-                        <TableColumn prefWidth="40.0" text="Prénom" />
-                        <TableColumn prefWidth="135.0" text="Age" />
-                        <TableColumn prefWidth="75.0" text="Statut" />
-                        <TableColumn prefWidth="75.0" text="Sexe" />
-                        <TableColumn prefWidth="48.0" text="Grade" />
-                        <TableColumn prefWidth="75.0" text="Column X" />
+                      <TableColumn fx:id="idColumn" prefWidth="47.0" text="ID" />
+                      <TableColumn fx:id="groupeColumn" prefWidth="54.0" text="Grp" />
+                      <TableColumn fx:id="lastNameColumn" prefWidth="50.0" text="Nom" />
+                      <TableColumn fx:id="firstNameColumn" prefWidth="40.0" text="Prénom" />
+                      <TableColumn fx:id="ageColumn" prefWidth="135.0" text="Age" />
+                      <TableColumn fx:id="statutColumn" prefWidth="75.0" text="Statut" />
+                      <TableColumn fx:id="sexeColumn" prefWidth="75.0" text="Sexe" />
+                      <TableColumn fx:id="gradeColumn" prefWidth="48.0" text="Grade" />
+                      <TableColumn prefWidth="75.0" text="Column X" />
                     </columns>
                   </TableView>
                   <Label layoutX="14.0" layoutY="14.0" text="Liste des patients">

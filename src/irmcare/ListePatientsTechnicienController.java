@@ -10,10 +10,12 @@ import java.sql.*;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -51,33 +53,44 @@ public class ListePatientsTechnicienController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ObservableList<Patient> data;
+
+        idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        groupeColumn.setCellValueFactory(cellData -> cellData.getValue().groupeProperty());
+        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
+        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+        ageColumn.setCellValueFactory(cellData -> cellData.getValue().ageProperty());
+        statutColumn.setCellValueFactory(cellData -> cellData.getValue().statutProperty());
+        sexeColumn.setCellValueFactory(cellData -> cellData.getValue().sexeProperty());
+        gradeColumn.setCellValueFactory(cellData -> cellData.getValue().gradeProperty());
+        
+        patientTable.setItems(recuperationPatients());
+    }   
+    
+    public ObservableList<Patient> recuperationPatients()
+    {
+        ObservableList<Patient> data = FXCollections.observableArrayList();
         Patient patient;
         String requete = "select * from Patient;";
+
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
             while(result.next())
             {
-                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOM"), result.getString("NOM"), result.getInt("AGE"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXE"), result.getInt("GRADEGLIOMEACTUEL"));
+                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOM"), result.getString("NOM"), result.getInt("AGE"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXE").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
                 data.add(patient);
             }
+            System.out.println("Liste remplie par la bdd");
         }
         catch(SQLException e){
             System.out.println(e);
+            System.out.println("Liste non remplie par la bdd");
         }
-        
-        /*idColumn.setCellValueFactory(cellData -> cellData.getValue().birthdayProperty());
-        groupeColumn.setCellValueFactory(cellData -> cellData.getValue().promotionProperty());
-        firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-        ageColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
-        statutColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-        sexeColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
-        gradeColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());*/
-    }   
+        data.add(new Patient(1,1,"uvjb","iugig",45,false,true,'H',2));
+        return data;
+    }
     
-    @FXML
+    
     public void handleRechercher(){
         String requeteTri = "select * from patient where nom = "+motcle.getText()+" or prenom = "+motcle.getText()+";";
         try{
