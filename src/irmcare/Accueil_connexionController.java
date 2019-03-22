@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 /**
  * FXML Controller class
  *
- * @author Laure
+ * @author Laure & Marie
  */
 public class Accueil_connexionController implements Initializable {
 
