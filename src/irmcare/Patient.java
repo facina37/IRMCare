@@ -28,7 +28,7 @@ public class Patient {
         id = new SimpleStringProperty(Integer.toString(idP));
         groupe = new SimpleStringProperty(Integer.toString(groupeP));
         firstName = new SimpleStringProperty(firstNameP);
-        lastName = new SimpleStringProperty(firstNameP);
+        lastName = new SimpleStringProperty(lastNameP);
         age = new SimpleStringProperty(Integer.toString(ageP));
         sexe = new SimpleStringProperty(Character.toString(sexeP));
         grade = new SimpleStringProperty(Integer.toString(gradeP));
@@ -64,4 +64,12 @@ public class Patient {
         return statut;
     }
     
+    
+    public String getFirstName() {
+        return firstName.get();
+    }
+    public String getLastName() {
+        return lastName.get();
+    }
+
 }

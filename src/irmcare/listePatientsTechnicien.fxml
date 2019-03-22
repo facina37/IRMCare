@@ -32,8 +32,8 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="355.0" layoutY="15.0" />
-                  <Button layoutX="504.0" layoutY="15.0" mnemonicParsing="false" text="Rechercher" />
+                  <TextField fx:id="motcle" layoutX="355.0" layoutY="15.0" />
+                  <Button layoutX="504.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" />
                </children></AnchorPane>
       </content>
     </Tab>

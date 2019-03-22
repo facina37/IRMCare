@@ -86,24 +86,43 @@ public class ListePatientsTechnicienController implements Initializable {
             System.out.println(e);
             System.out.println("Liste non remplie par la bdd");
         }
+        catch(NullPointerException e){
+            System.out.println(e);
+            System.out.println("Liste non remplie par la bdd");
+        }
         data.add(new Patient(1,1,"uvjb","iugig",45,false,true,'H',2));
         return data;
     }
     
     
     public void handleRechercher(){
-        String requeteTri = "select * from patient where nom = "+motcle.getText()+" or prenom = "+motcle.getText()+";";
+        
+        ObservableList<Patient> data = FXCollections.observableArrayList();
+        Patient patient;
+        String requete = "select * from Patient;";
+
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
-            ResultSet result = stmt.executeQuery(requeteTri);
+            ResultSet result = stmt.executeQuery(requete);
             while(result.next())
             {
-                //afficher les personnes dans le tableau
+                patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOM"), result.getString("NOM"), result.getInt("AGE"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXE").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
+                //on garde le patient si on trouve le mot clé dans son nom ou son prénom
+                if(patient.getFirstName().contains(motcle.getText()) || patient.getLastName().contains(motcle.getText()))
+                {
+                    data.add(patient);
+                }
             }
+            System.out.println("Liste remplie par la bdd");
         }
         catch(SQLException e){
             System.out.println(e);
+            System.out.println("Liste non remplie par la bdd");
         }
+        catch(NullPointerException e){
+            System.out.println(e);
+            System.out.println("Liste non remplie par la bdd");
+        }
+        patientTable.setItems(data);
     }
-    
 }
