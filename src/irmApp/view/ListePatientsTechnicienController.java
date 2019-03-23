@@ -116,11 +116,10 @@ public class ListePatientsTechnicienController implements Initializable {
     
     @FXML
     public void handleRechercher(){
-        
         ObservableList<Patient> data = FXCollections.observableArrayList();
         Patient patient;
         String requete = "select * from Patient;";
-
+        
         try{
             stmt = maconnection.ObtenirConnection().createStatement();
             ResultSet result = stmt.executeQuery(requete);
@@ -143,6 +142,15 @@ public class ListePatientsTechnicienController implements Initializable {
             System.out.println(e);
             System.out.println("Liste non remplie par la bdd");
         }
+        
+        //debut test
+        patient = new Patient(1,1,"uvjb","iugig",45,false,true,'H',2);
+        if(patient.getFirstName().contains(motcle.getText()) || patient.getLastName().contains(motcle.getText()))
+        {
+            data.add(patient);
+        }
+        //fin test
+        
         patientTable.setItems(data);
     }
     
