@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package irmcare;
+package irmApp.view;
 
+import irmApp.database.ConnexionOracle;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javax.swing.JOptionPane;
+import irmApp.database.ConnexionOracle;
 
 
 /**

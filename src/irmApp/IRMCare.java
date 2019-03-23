@@ -3,17 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package irmcare;
+package irmApp;
 
+import irmApp.model.Patient;
+import irmApp.view.AjoutExamenController;
+import irmApp.view.ListePatientsTechnicienController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.stage.*;
+
+
 
 /**
  *
@@ -23,15 +28,16 @@ public class IRMCare extends Application {
     
     private Stage primaryStage;
     private Patient patient;
+    public IRMCare() {
+
+    }
     
     @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("listePatientsTechnicien.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("IRMCare");
+        //premiere page affichée
+        showListePatientsTechnicien();
     }
     
     /**
@@ -42,14 +48,31 @@ public class IRMCare extends Application {
         return primaryStage;
     }
     
+    public void showListePatientsTechnicien() {
+        try {
+            // charge table
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(IRMCare.class.getResource("view/listePatientsTechnicien.fxml"));
+            TabPane studentTable = (TabPane) loader.load();
+            
+            // affiche scene
+            Scene scene = new Scene(studentTable);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     
     //Qd on sélectionne un patient et que l'on veut lui ajouter un Examen
-    public boolean showExamForm(Patient patient) {
+    public boolean showExamForm(Patient aPatient) {
+        patient = aPatient;
         try {
-            this.patient = patient;
             // nouvelle scene pour pop up
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(IRMCare.class.getResource("ajoutExamen.fxml"));
+            loader.setLocation(IRMCare.class.getResource("view/ajoutExamen.fxml"));
             GridPane page = (GridPane) loader.load();
 
             // Creer nouvelle scene.
@@ -60,7 +83,7 @@ public class IRMCare extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
         
-            // etudiant dans le controller
+            // dialogue avec le controller
             AjoutExamenController controller = loader.getController();
             controller.setDialogStage(dialogStage);
         
@@ -75,7 +98,7 @@ public class IRMCare extends Application {
         }
     }
     
-    public Patient getPatient ()
+    public Patient getPatient()
     {
         return patient;
     }

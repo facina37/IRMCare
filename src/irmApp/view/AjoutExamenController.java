@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package irmcare;
+package irmApp.view;
 
+import irmApp.database.ConnexionOracle;
+import irmApp.IRMCare;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -16,6 +18,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
+import irmApp.database.ConnexionOracle;
 
 /**
  * FXML Controller class
@@ -65,6 +68,13 @@ public class AjoutExamenController implements Initializable {
     Statement stmt; //créer une variable de la requête
     
     
+    /**
+     * Constructeur doit etre avant methode initialize
+     * 
+     */
+    public AjoutExamenController() {
+        
+    }
     
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;

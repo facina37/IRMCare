@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package irmcare;
+package irmApp.database;
 
 import java.sql.*;
 
@@ -41,7 +41,7 @@ public class ConnexionOracle {
         }
     }
     
-    Connection ObtenirConnection(){
+    public Connection ObtenirConnection(){
         return con;
     }
 }

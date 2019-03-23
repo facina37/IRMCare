@@ -3,20 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package irmcare;
+package irmApp.view;
 
+import irmApp.model.Patient;
 import java.net.URL;
 import java.sql.*;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import irmApp.database.ConnexionOracle;
+import irmApp.IRMCare;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 
 /**
  * FXML Controller class
@@ -53,6 +56,17 @@ public class ListePatientsTechnicienController implements Initializable {
     
     ConnexionOracle maconnection = new ConnexionOracle();
     Statement stmt; //créer une variable de la requête
+    
+    
+    
+     /**
+     * Constructeur doit etre avant methode initialize
+     * 
+     */
+    public ListePatientsTechnicienController() {
+        
+    }
+    
     
     /**
      * Initializes the controller class.
@@ -140,7 +154,10 @@ public class ListePatientsTechnicienController implements Initializable {
     
         if (aPatient != null) {
             System.out.println("Vous êtes prêt a ajouter l'irm");
-            irmCare.showExamForm(aPatient);
+
+            okClicked = irmCare.showExamForm(aPatient);
+
+
         } 
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
