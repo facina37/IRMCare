@@ -181,6 +181,4 @@ public class ListePatientsTechnicienController implements Initializable {
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
-    
-    
 }

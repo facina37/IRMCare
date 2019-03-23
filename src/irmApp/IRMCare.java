@@ -6,6 +6,7 @@
 package irmApp;
 
 import irmApp.model.Patient;
+import irmApp.model.Examen;
 import irmApp.view.AjoutExamenController;
 import irmApp.view.ListePatientsTechnicienController;
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class IRMCare extends Application {
     
     private Stage primaryStage;
     private Patient patient;
+    private Examen examen;
     public IRMCare() {
 
     }
@@ -73,6 +75,69 @@ public class IRMCare extends Application {
             // nouvelle scene pour pop up
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(IRMCare.class.getResource("view/ajoutExamen.fxml"));
+            GridPane page = (GridPane) loader.load();
+
+            // Creer nouvelle scene.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Formulaire");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+        
+            // dialogue avec le controller
+            AjoutExamenController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+        
+            // montre pop up et attend que close soit clique
+            dialogStage.showAndWait();
+        
+            return controller.isOkClicked();
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    //Qd on sélectionne un patient et que l'on veut lui ajouter un Examen
+    public boolean showVisiteForm(Patient aPatient) {
+        patient = aPatient;
+        try {
+            // nouvelle scene pour pop up
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(IRMCare.class.getResource("view/ajoutVisite.fxml"));
+            GridPane page = (GridPane) loader.load();
+
+            // Creer nouvelle scene.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Formulaire");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+        
+            // dialogue avec le controller
+            AjoutExamenController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+        
+            // montre pop up et attend que close soit clique
+            dialogStage.showAndWait();
+        
+            return controller.isOkClicked();
+        } 
+        catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean showVerifIRMForm(Examen examen) {
+        this.examen = examen;
+        try {
+            // nouvelle scene pour pop up
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(IRMCare.class.getResource("view/examen_perso.fxml"));
             GridPane page = (GridPane) loader.load();
 
             // Creer nouvelle scene.
