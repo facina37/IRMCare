@@ -13,6 +13,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.time.LocalDate;
 
 /**
  * FXML Controller class
@@ -89,7 +91,7 @@ public class Accueil_medecinController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        //partie patient
         idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         groupeColumn.setCellValueFactory(cellData -> cellData.getValue().groupeProperty());
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
@@ -100,6 +102,14 @@ public class Accueil_medecinController implements Initializable {
         gradeColumn.setCellValueFactory(cellData -> cellData.getValue().gradeProperty());
         
         patientTable.setItems(recuperationPatients());
+        
+        //partie examens
+        idExamColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        dateColumn.setCellValueFactory(cellData -> cellData.getValue().dateProperty());
+        prenomColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
+        nomColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
+        
+        examenTable.setItems(recuperationExamens());
     }   
     
     /*
@@ -199,6 +209,37 @@ public class Accueil_medecinController implements Initializable {
 
             alert.showAndWait();
         }
+    }
+    
+    
+    /*
+        Récupère tous les examens à valider
+    */
+    public ObservableList<Examen> recuperationExamens()
+    {
+        ObservableList<Examen> data = FXCollections.observableArrayList();
+        Examen examen;
+        String requete = "select * from Examen join patient on examen.idpatient = patient.idpatient where examen.gradeMedecin = null;";
+
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requete);
+            while(result.next())
+            {
+                examen = new Examen(result.getInt("IDEXAMEN"), result.getDate("DATEEXAM"), result.getString("PRENOM"), result.getString("NOM"));
+                data.add(examen);
+            }
+            System.out.println("Liste remplie par la bdd");
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Liste non remplie par la bdd");
+        }
+        catch(NullPointerException e){
+            System.out.println(e);
+            System.out.println("Liste non remplie par la bdd");
+        }
+        return data;
     }
     
     /*

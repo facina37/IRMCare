@@ -46,15 +46,15 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TableView layoutX="83.0" layoutY="67.0" prefHeight="297.0" prefWidth="437.0">
+                  <TableView fx:id="examenTable" layoutX="83.0" layoutY="67.0" prefHeight="297.0" prefWidth="437.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="ID examen" />
-                        <TableColumn prefWidth="68.0" text="Date" />
-                      <TableColumn prefWidth="147.0" text="Nom du patient" />
-                        <TableColumn prefWidth="147.0" text="Prénom du patient" />
+                      <TableColumn fx:id="idExamColumn" prefWidth="75.0" text="ID examen" />
+                        <TableColumn fx:id="dateColumn" prefWidth="68.0" text="Date" />
+                      <TableColumn fx:id="nomColumn" prefWidth="147.0" text="Nom du patient" />
+                        <TableColumn fx:id="prenomColumn" prefWidth="147.0" text="Prénom du patient" />
                     </columns>
                   </TableView>
-                  <Button layoutX="261.0" layoutY="382.0" mnemonicParsing="false" text="Sélectionner" />
+                  <Button layoutX="261.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleVerifExam" text="Sélectionner" />
                </children>
             </AnchorPane>
          </content></Tab>

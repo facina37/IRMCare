@@ -5,6 +5,9 @@
  */
 package irmApp.model;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -19,9 +22,11 @@ public class Examen {
     private final StringProperty firstName;
     private final StringProperty lastName;
     
-    public Examen(int idP, LocalDate dateP, String firstNameP, String lastNameP){
+    public Examen(int idP, Date dateP, String firstNameP, String lastNameP){
         id = new SimpleStringProperty(Integer.toString(idP));
-        date = new SimpleStringProperty(Integer.toString(dateP.getDayOfMonth())+"/"+Integer.toString(dateP.getMonthValue())+"/"+Integer.toString(dateP.getYear()));
+        //dateP doit être sous la forme 
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        date = new SimpleStringProperty(df.format(dateP));
         firstName = new SimpleStringProperty(firstNameP);
         lastName = new SimpleStringProperty(lastNameP);
     }
