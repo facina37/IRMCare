@@ -53,7 +53,7 @@ public class Accueil_medecinController implements Initializable {
     @FXML
     private TableColumn<Patient, String> gradeColumn;
     @FXML
-    private TextField motcle;
+    private TextField motclePatient;
     
     //tableau examen
     @FXML
@@ -66,6 +66,9 @@ public class Accueil_medecinController implements Initializable {
     private TableColumn<Examen, String> prenomColumn;
     @FXML
     private TableColumn<Examen, String> nomColumn;
+    
+    @FXML
+    private TextField motcleExamen;
     
     private Stage dialogStage;
     
@@ -147,7 +150,7 @@ public class Accueil_medecinController implements Initializable {
         Affiche la liste de ts les patients recherchés
     */
     @FXML
-    public void handleRechercher(){
+    public void handleRechercherPatients(){
         ObservableList<Patient> data = FXCollections.observableArrayList();
         Patient patient;
         String requete = "select * from Patient;";
@@ -159,7 +162,7 @@ public class Accueil_medecinController implements Initializable {
             {
                 patient = new Patient(result.getInt("IDPATIENT"), result.getInt("IDGROUPE"), result.getString("PRENOM"), result.getString("NOM"), result.getInt("AGE"), result.getBoolean("EXCLUS"), result.getBoolean("PROGRAMMEFINI"), result.getString("SEXE").charAt(0), result.getInt("GRADEGLIOMEACTUEL"));
                 //on garde le patient si on trouve le mot clé dans son nom ou son prénom
-                if(patient.getFirstName().contains(motcle.getText()) || patient.getLastName().contains(motcle.getText()))
+                if(patient.getFirstName().contains(motclePatient.getText()) || patient.getLastName().contains(motclePatient.getText()))
                 {
                     data.add(patient);
                 }
@@ -177,7 +180,7 @@ public class Accueil_medecinController implements Initializable {
         
         //debut test
         patient = new Patient(1,1,"uvjb","iugig",45,false,true,'H',2);
-        if(patient.getFirstName().contains(motcle.getText()) || patient.getLastName().contains(motcle.getText()))
+        if(patient.getFirstName().contains(motclePatient.getText()) || patient.getLastName().contains(motclePatient.getText()))
         {
             data.add(patient);
         }
@@ -240,6 +243,41 @@ public class Accueil_medecinController implements Initializable {
             System.out.println("Liste non remplie par la bdd");
         }
         return data;
+    }
+    
+    /*
+        Affiche la liste de ts les examens recherchés
+    */
+    @FXML
+    public void handleRechercherExamens(){
+        ObservableList<Examen> data = FXCollections.observableArrayList();
+        Examen examen;
+        String requete = "select * from Examen join patient on examen.idpatient = patient.idpatient where examen.gradeMedecin = null;";
+        
+        try{
+            stmt = maconnection.ObtenirConnection().createStatement();
+            ResultSet result = stmt.executeQuery(requete);
+            while(result.next())
+            {
+                examen = new Examen(result.getInt("IDEXAMEN"), result.getDate("DATEEXAM"), result.getString("PRENOM"), result.getString("NOM"));
+                
+                //on garde le patient si on trouve le mot clé dans son nom ou son prénom
+                if(examen.getFirstName().contains(motcleExamen.getText()) || examen.getLastName().contains(motcleExamen.getText()))
+                {
+                    data.add(examen);
+                }
+            }
+            System.out.println("Liste remplie par la bdd");
+        }
+        catch(SQLException e){
+            System.out.println(e);
+            System.out.println("Liste non remplie par la bdd");
+        }
+        catch(NullPointerException e){
+            System.out.println(e);
+            System.out.println("Liste non remplie par la bdd");
+        }  
+        examenTable.setItems(data);
     }
     
     /*
