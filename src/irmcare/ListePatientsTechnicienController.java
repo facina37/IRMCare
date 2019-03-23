@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -44,6 +45,11 @@ public class ListePatientsTechnicienController implements Initializable {
     private TableColumn<Patient, String> gradeColumn;
     @FXML
     private TextField motcle;
+    
+    private Stage dialogStage;
+    
+    // Reference au main.
+    private IRMCare irmCare;
     
     ConnexionOracle maconnection = new ConnexionOracle();
     Statement stmt; //créer une variable de la requête
@@ -94,7 +100,7 @@ public class ListePatientsTechnicienController implements Initializable {
         return data;
     }
     
-    
+    @FXML
     public void handleRechercher(){
         
         ObservableList<Patient> data = FXCollections.observableArrayList();
@@ -125,4 +131,31 @@ public class ListePatientsTechnicienController implements Initializable {
         }
         patientTable.setItems(data);
     }
+    
+    @FXML
+    public void handleAjoutIrm(){
+        Patient aPatient;
+        aPatient = patientTable.getSelectionModel().getSelectedItem();
+        boolean okClicked;
+    
+        if (aPatient != null) {
+            System.out.println("Vous êtes prêt a ajouter l'irm");
+            irmCare.showExamForm(aPatient);
+        } 
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Attention !");
+            alert.setHeaderText("Rien n'a été sélectionné !");
+            alert.setContentText("Il faut sélectionner un patient");
+
+            alert.showAndWait();
+        }
+    }
+    
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+    
+    
 }

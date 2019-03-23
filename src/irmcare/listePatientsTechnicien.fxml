@@ -14,17 +14,16 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="patientTable" layoutX="8.0" layoutY="55.0" prefHeight="316.0" prefWidth="584.0">
+                  <TableView fx:id="patientTable" layoutX="8.0" layoutY="55.0" prefHeight="277.0" prefWidth="584.0">
                     <columns>
                       <TableColumn fx:id="idColumn" prefWidth="47.0" text="ID" />
                       <TableColumn fx:id="groupeColumn" prefWidth="54.0" text="Grp" />
-                      <TableColumn fx:id="lastNameColumn" prefWidth="50.0" text="Nom" />
-                      <TableColumn fx:id="firstNameColumn" prefWidth="40.0" text="Prénom" />
-                      <TableColumn fx:id="ageColumn" prefWidth="135.0" text="Age" />
-                      <TableColumn fx:id="statutColumn" prefWidth="75.0" text="Statut" />
-                      <TableColumn fx:id="sexeColumn" prefWidth="75.0" text="Sexe" />
-                      <TableColumn fx:id="gradeColumn" prefWidth="48.0" text="Grade" />
-                      <TableColumn prefWidth="75.0" text="Column X" />
+                      <TableColumn fx:id="lastNameColumn" prefWidth="109.0" text="Nom" />
+                      <TableColumn fx:id="firstNameColumn" prefWidth="120.0" text="Prénom" />
+                      <TableColumn fx:id="ageColumn" prefWidth="47.0" text="Age" />
+                      <TableColumn fx:id="statutColumn" prefWidth="115.0" text="Statut" />
+                      <TableColumn fx:id="sexeColumn" prefWidth="46.0" text="Sexe" />
+                      <TableColumn fx:id="gradeColumn" prefWidth="45.0" text="Grade" />
                     </columns>
                   </TableView>
                   <Label layoutX="14.0" layoutY="14.0" text="Liste des patients">
@@ -34,6 +33,7 @@
                   </Label>
                   <TextField fx:id="motcle" layoutX="355.0" layoutY="15.0" />
                   <Button layoutX="504.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleRechercher" text="Rechercher" />
+                  <Button layoutX="252.0" layoutY="339.0" mnemonicParsing="false" onAction="#handleAjoutIrm" text="Ajouter un IRM" />
                </children></AnchorPane>
       </content>
     </Tab>

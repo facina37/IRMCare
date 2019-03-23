@@ -71,5 +71,7 @@ public class Patient {
     public String getLastName() {
         return lastName.get();
     }
-
+    public int getId() {
+        return Integer.parseInt(id.get());
+    }
 }

@@ -57,8 +57,8 @@ public class AjoutExamenController implements Initializable {
     
     //Partie dialogue
     private Stage dialogStage;
-    private boolean okVisite;
-    private boolean okMedicament;
+    private boolean okClicked = false;
+    private IRMCare irmCare;
     
     
     ConnexionOracle maconnection = new ConnexionOracle();
@@ -137,22 +137,32 @@ public class AjoutExamenController implements Initializable {
     @FXML
     private void handleAjoutExamen(ActionEvent event) {
         if (isInputExamenValid()) {
-            //dialogStage.close();
-            //String requeteAjout = "Insert into Examen (idMachine, idPatient, idMedecin, dateExam,"
-            //       + " volCrane, valMaxAxeCrane, volTumeur, Cho_Cr, Naa_Cr, Naa_Cho, lip_cr, mtt,"
-            //       + " ttp, rcbv, rcbf, lac) values ("+idMachine+","+idPatient+","+idMedecin+","
-            //       + dateExamen+","+volCrane+","+axeCrane+","+volTumeur+","+cho_cr+","+naa_cr+","
-            //       + naa_cho+","+lip_cr+","+mtt+","+ttp+","+rcbv+","+rcbf+","+lac+");";
+            String requeteAjout = "Insert into Examen (idMachine, idPatient, idMedecin, dateExam,"
+                   + " volCrane, valMaxAxeCrane, volTumeur, Cho_Cr, Naa_Cr, Naa_Cho, lip_cr, mtt,"
+                   + " ttp, rcbv, rcbf, lac) values ("+idMachine+","+irmCare.getPatient().getId()+","+idMedecin+","
+                   + dateExamen+","+volCrane+","+axeCrane+","+volTumeur+","+cho_cr+","+naa_cr+","
+                   + naa_cho+","+lip_cr+","+mtt+","+ttp+","+rcbv+","+rcbf+","+lac+");";
             try{
                 stmt = maconnection.ObtenirConnection().createStatement();
-                //stmt.executeQuery(requeteAjout);
+                stmt.executeQuery(requeteAjout);
                 //petit pop up
                 JOptionPane.showMessageDialog(null, "Enregistré avec succès");
+                System.out.println("Enregistré");
             }
             catch(SQLException e){
                 System.out.println(e);
+                System.out.println("Non enregistré");
             }
+            okClicked = true;
+            dialogStage.close();
         }
+    }
+    
+    /**
+     * retourne true si le bouton ok est clique
+     */
+    public boolean isOkClicked() {
+        return okClicked;
     }
     
     /**
